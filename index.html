@@ -17,7 +17,7 @@
           background-attachment:fixed;
         }
         #page { 
-          width:480px;
+          width:320px;
           border:3px solid #000; 
           border-radius:12px; 
           background:#fff; 
@@ -91,16 +91,21 @@
 const snaps = [ 
   { 
     id: 'npm:minesweeper-snap',
-    name: 'Minesweeper'
+    name: 'Minesweeper',
+    version: '0.1.0',
+    icon: 'icons/minesweeper.svg'
   },
   { 
     id: 'npm:slots-snap',
-    name: 'Slots'
+    name: 'Slots',
+    version: '0.1.0',
+    icon: 'icons/slots.svg'
   },
   { 
     id: 'npm:mystery-fox',
     name: 'Mystery Fox',
-    version: '1.0.0'
+    version: '1.0.0',
+    icon: 'icons/mystery-fox.svg'
   }
 ]; 
 
@@ -145,7 +150,9 @@ const MetaMaskFound = async (providerDetail) => {
     document.getElementById("page").insertAdjacentHTML("beforeend", 
 `<div class="container">
   <div class="columns">
-    <div class="column col-3">Hi</div>
+    <div class="column col-3">
+      <img src="${snap.icon}"/>
+    </div>
     <div class="column col-9">
       <p>${snap.name}</p>
       <p>${snap.id}</p>
