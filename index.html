@@ -13,35 +13,30 @@
           justify-content:center;
           align-items:center;
           height:100vh;
-          background-color:#fff;
+          background:#e3e3e3 url(quiet-foxes.png) center center;
+          background-attachment:fixed;
         }
         #page { 
           width:480px;
+          border:3px solid #000; 
+          border-radius:12px; 
+          background:#fff; 
+          padding:1.5em 1.5em 0.25em; 
         }
         #demo { 
           display:none; 
         }
         h1 { 
           font-size:1.5rem;
-          line-height:64px; 
-          padding:0;
-          margin-bottom:32px;
-        }
-        h1 img { 
-          vertical-align:top;
-          margin-top:-8px; 
-        }
-        h2 { 
-          font-size:1.125rem;
-          font-weight:bold;
         }
         #footer { 
           position:fixed;
-          width:480px; 
+          width:100%; 
           bottom:0;
-          left:50%;
-          margin-left:-240px;
-          padding-bottom:24px; 
+          padding:18px 0 24px; 
+          background:#fff;
+          border-top:3px solid #000;
+          text-align:center;
         }
         #links { 
           float:right; 
@@ -77,14 +72,13 @@
           #demo video { 
             margin-top:-1px; 
           }
-          h1 { 
-            margin-top:140px; 
-          }
         }
       </style>
   </head>
   <body>
     <div id="page">
+      <h1>JSX Example Snaps</h1>
+      <p><i>The following Snaps are built with the new JSX-powered UI library for Snaps. You can install and try them in MetaMask Extension or MetaMask Flask version 12+.</i></p>
       <p id="loading">Loading...</p>
     </div>
     <div id="footer">
