@@ -7,40 +7,80 @@
       <meta charset="utf-8"/>
       <meta name="viewport" content="width=device-width"/>
       <link rel="stylesheet" href="https://unpkg.com/spectre.css/dist/spectre.min.css">
+      <link rel="preconnect" href="https://fonts.googleapis.com">
+      <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+      <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
       <style type="text/css">
         body { 
           display:flex;
-          justify-content:center;
+          flex-direction:column;
+          font-family:'Rubik', 'Helvetica Neue', Helvetica, sans-serif; 
+          /* justify-content:center; */
           align-items:center;
-          height:100vh;
+          min-height:100vh;
           background:#e3e3e3 url(quiet-foxes.png) center center;
           background-attachment:fixed;
         }
+        #container { 
+          flex:1 1 auto;
+          display:flex; 
+          justify-content:center;
+          align-items:center; 
+        }
         #page { 
-          width:320px;
+          width:480px;
           border:3px solid #000; 
           border-radius:12px; 
           background:#fff; 
           padding:1.5em 1.5em 0.25em; 
+          margin:8px 0 84px; 
         }
         .hidden { display:none; }
         #demo { 
           display:none; 
         }
         h1 { 
-          font-size:1.5rem;
+          font-size:32px;
+          padding-bottom:8px; 
+        }
+        h1 span.smaller { 
+          font-size:24px;
+          color:#777; 
+        }
+        div.snap { 
+          display:flex; 
+          flex-direction:row;
+          clear:left; 
+          border-top:1px solid #ccc; 
+          padding-top:24px; 
+        }
+        div.snap-icon { 
+          width:64px; 
+          margin-right:18px; 
+        }
+        div.snap-icon img { 
+          border-radius:32px; 
+          border:1px solid #ccc; 
+        }
+        h2 { 
+          font-size:24px; 
+          margin-bottom:8px; 
+        }
+        p.snap-description { 
+          margin-bottom:16px; 
         }
         #footer { 
           position:fixed;
-          width:100%; 
+          width:480px; 
           bottom:0;
-          padding:18px 0 24px; 
+          left:50%;
+          margin-left:-240px;
+          padding:24px 0 24px;
+          border-radius:12px 12px 0 0;  
           background:#fff;
-          border-top:3px solid #000;
+          border:3px solid #000;
+          border-bottom-width:0; 
           text-align:center;
-        }
-        #links { 
-          float:right; 
         }
         a, a:link { 
           color:#2196f3 !important; 
@@ -57,29 +97,14 @@
           background-color:rgb(21, 101, 192); 
           border-color:rgb(21, 101, 192); 
         }
-        @media only screen and (min-width: 900px) {
-          #page { 
-            width:900px; 
-          }
-          #demo { 
-            display:block;
-            float:right;
-            margin-left:36px; 
-            width:357px; 
-            height:600px; 
-            overflow:hidden; 
-            border:1px solid #ccc; 
-          }
-          #demo video { 
-            margin-top:-1px; 
-          }
-        }
       </style>
   </head>
   <body>
-    <div id="page">
-      <h1>MetaMask Snaps by Home Row</h1>
-      <p id="loading">Loading...</p>
+    <div id="container">
+      <div id="page">
+        <h1>MetaMask Snaps<span class="smaller">&nbsp; by Montoya</span></h1>
+        <p id="loading">Loading...</p>
+      </div>
     </div>
     <div id="footer">
       Powered by <a href="https://metamask.io/snaps/">MetaMask Snaps</a> &bull; 
@@ -93,26 +118,24 @@ const snaps = [
     id: 'npm:minesweeper-snap',
     name: 'Minesweeper',
     version: '0.1.0',
-    icon: 'snapicons/minesweeper.svg'
+    icon: 'snapicons/minesweeper.svg',
+    description: 'The classic puzzle game. Are you brave enough to click?'
   },
   { 
     id: 'npm:slots-snap',
     name: 'Slots',
     version: '0.1.0',
-    icon: 'snapicons/slots.svg'
+    icon: 'snapicons/slots.svg',
+    description: 'Welcome to the casino. Are you feeling lucky?'
   },
   { 
     id: 'npm:mystery-fox',
     name: 'Mystery Fox',
     version: '1.0.0',
-    icon: 'snapicons/mystery-fox.svg'
+    icon: 'snapicons/mystery-fox.svg',
+    description: 'Ask a question, any question, and let the mystery fox decide your fate.'
   }
 ]; 
-
-const snapId = 'npm:mystery-fox';
-const snapName = 'Mystery Fox';
-const snapVersion = '1.0.0';  
-
 /* 
  * Use EIP-6963 to detect MetaMask
  */
@@ -148,63 +171,65 @@ const MetaMaskFound = async (providerDetail) => {
   snaps.forEach((snap) => { 
     const div = document.createElement("div"); 
     document.getElementById("page").insertAdjacentHTML("beforeend", 
-`<div class="container">
-  <div class="columns">
-    <div class="column col-3">
-      <img src="${snap.icon}"/>
-    </div>
-    <div class="column col-9">
-      <p>${snap.name}</p>
-      <p>${snap.id}</p>
-    </div>
+`<div class="snap">
+  <div class="snap-icon">
+    <img src="${snap.icon}" width="64" height="64">
+  </div>
+  <div class="snap-body">
+    <h2>${snap.name}</h2>
+    <p class="snap-description">${snap.description}</p>
+    <p><button class="btn btn-primary btn-md snap-btn" data-id="${snap.id}" data-version="${snap.version}">Add to MetaMask</button></p>
+    <p>
   </div>
 </div>`
     ); 
   }); 
 
-  return; 
-
-  const btn = document.createElement("button"); 
-  btn.className = "btn btn-primary btn-lg"; 
-  btn.textContent = "Install "+snapName; 
-
-  
-
-  btn.onclick = async (event) => { 
-    event.preventDefault(); 
-    try { 
-      const result = await provider.request({ 
-        method: 'wallet_requestSnaps', 
-        params: 
-        {
-          [snapId]: { 
-            version: snapVersion
-          }
-        },
-      }); 
-
-      if(result) { 
+  const installedSnaps = await provider.request({
+    method: 'wallet_getSnaps',
+  });
+  const snapButtons = document.getElementsByClassName('snap-btn'); 
+  [...snapButtons].forEach((btn) => { 
+    if( Object.keys(installedSnaps).includes(btn.dataset.id) ) { 
+      btn.textContent = "Added!"; 
+      btn.disabled = true; 
+    }
+    else { 
+      btn.onclick = async (event) => { 
+        event.preventDefault(); 
         try { 
-          const snaps = await provider.request({
-            method: 'wallet_getSnaps',
+          const result = await provider.request({ 
+            method: 'wallet_requestSnaps', 
+            params: 
+            {
+              [event.target.dataset.id]: { 
+                version: event.target.dataset.version
+              }
+            },
           }); 
-          if( Object.keys(snaps).includes(snapId) ) { 
-            // the snap is installed and connected 
-            btn.textContent = "Installed!"; 
-            btn.onclick = null; 
-            btn.disabled = true; 
-          }
-          else { 
-            // the snap was not installed 
+          
+          if(result) { 
+            try { 
+              const snaps = await provider.request({
+                method: 'wallet_getSnaps',
+              }); 
+              if( Object.keys(snaps).includes(event.target.dataset.id) ) { 
+                // the snap is installed and connected 
+                event.target.textContent = "Added!"; 
+                event.target.onclick = null; 
+                event.target.disabled = true; 
+              }
+              else { 
+                // the snap was not installed 
+              }
+            }
+            catch { }
           }
         }
         catch { }
-      }
+      }; 
     }
-    catch { }
-  }; 
-  document.getElementById('loading').textContent = "";
-  document.getElementById('loading').appendChild(btn); 
+  }); 
 
 }; 
 
