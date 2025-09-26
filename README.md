@@ -6,7 +6,7 @@ Permissionless games and toys you can install into your MetaMask Extension. Let'
 
 Source code for individual Snaps: 
 
-* https://github.com/Montoya/minesweeper-snap
-* https://github.com/Montoya/slots-snap
-* https://github.com/Montoya/mystery-fox
-* https://github.com/Montoya/transformer-snap
+* [Text Transformer](https://github.com/Montoya/transformer-snap)
+* [Minesweeper](https://github.com/Montoya/minesweeper-snap)
+* [Slots](https://github.com/Montoya/slots-snap)
+* [Mystery Fox](https://github.com/Montoya/mystery-fox)
