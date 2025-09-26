@@ -12,19 +12,11 @@
       <link href="https://fonts.googleapis.com/css2?family=Rubik:ital,wght@0,300..900;1,300..900&display=swap" rel="stylesheet">
       <style type="text/css">
         body { 
-          display:flex;
-          flex-direction:column;
           font-family:'Rubik', 'Helvetica Neue', Helvetica, sans-serif; 
-          align-items:center;
-          min-height:100vh;
           background:#e3e3e3 url(quiet-foxes.png) center center;
           background-attachment:fixed;
         }
         #container { 
-          flex:1 1 auto;
-          display:flex; 
-          justify-content:center;
-          align-items:center; 
         }
         #page { 
           max-width:480px;
@@ -32,7 +24,7 @@
           border-radius:12px; 
           background:#fff; 
           padding:1.5em 1.5em 0.25em; 
-          margin:8px 0 84px; 
+          margin:16px auto 84px; 
         }
         .hidden { display:none; }
         #demo { 
@@ -107,7 +99,7 @@
     </div>
     <div id="footer">
       Powered by <a href="https://metamask.io/snaps/">MetaMask Snaps</a> &bull; 
-      <a href="https://github.com/Montoya/snaps-by-homerow">Source Code</a>
+      <a href="https://github.com/Montoya/snaps-by-montoya">Source Code</a>
     </div>
     
     <script type="text/javascript">
@@ -133,6 +125,13 @@ const snaps = [
     version: '1.0.0',
     icon: 'snapicons/mystery-fox.svg',
     description: 'Ask a question, any question, and let the mystery fox decide your fate.'
+  },
+  { 
+    id: 'npm:transformer-snap',
+    name: 'Text Transformer',
+    version: '1.0.2',
+    icon: 'snapicons/transformer.svg',
+    description: '𝔗𝔯𝔞𝔫𝔰𝔣𝔬𝔯𝔪 𝑦𝑜𝑢𝑟 𝕥𝕖𝕩𝕥 in MetaMask.'
   }
 ]; 
 /* 
@@ -167,7 +166,8 @@ const MetaMaskFound = async (providerDetail) => {
 
   loadingEl.className = "hidden";  
 
-  snaps.forEach((snap) => { 
+  while(snaps.length > 0) { 
+    const snap = snaps.shift();
     const div = document.createElement("div"); 
     document.getElementById("page").insertAdjacentHTML("beforeend", 
 `<div class="snap">
@@ -180,9 +180,8 @@ const MetaMaskFound = async (providerDetail) => {
     <p><button class="btn btn-primary btn-md snap-btn" data-id="${snap.id}" data-version="${snap.version}">Add to MetaMask</button></p>
     <p>
   </div>
-</div>`
-    ); 
-  }); 
+</div>`); 
+  }
 
   const installedSnaps = await provider.request({
     method: 'wallet_getSnaps',
